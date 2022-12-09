@@ -4,10 +4,7 @@ public class Day1Test
 {
     private Day1 _sut = new Day1();
 
-    [Fact]
-    public void Sample()
-    {
-        var input = new List<List<int>>()
+    private List<List<int>> _sampleInput = new List<List<int>>()
         {
           new List<int> {
               1000,
@@ -31,20 +28,43 @@ public class Day1Test
           }
         };
 
+    [Fact]
+    public void Part1_Sample()
+    {
         int expected = 24000;
-        int actual = _sut.Execute(input);
+        int actual = _sut.Part1(_sampleInput);
 
         actual.Should().Be(expected);        
     }
 
     [Fact]
-    public void ForReals() 
+    public void Part1_ForReals()
     {
         string rawInput = File.ReadAllText("./inputs/day1.txt");
         List<List<int>> input = Util.GetInputs(rawInput);
 
-        var actual = _sut.Execute(input);
+        var actual = _sut.Part1(input);
 
         actual.Should().Be(69883);
+    }
+
+    [Fact]
+    public void Part2_Sample()
+    {
+        int expected = 45000;
+        int actual = _sut.Part2(_sampleInput);
+
+        actual.Should().Be(expected);    
+    }
+
+    [Fact]
+    public void Part2_ForReals()
+    {
+        string rawInput = File.ReadAllText("./inputs/day1.txt");
+        List<List<int>> input = Util.GetInputs(rawInput);
+
+        var actual = _sut.Part2(input);
+
+        actual.Should().Be(207576);
     }
 }
