@@ -77,17 +77,44 @@ public class Day5
         }
     }
 
+    record Instruction(int numberToMove, int source, int destination)
+    {
+        public int Source => this.source - 1;
+        public int Destination => this.destination - 1;
+    }
+
+    void ExecuteInstruction(Instruction instruction, List<List<char>> state)
+    {
+        for(int i=0; i< instruction.numberToMove; i++)
+        {
+            char itemToMove = state[instruction.Source][state[instruction.Source].Count - 1];
+            state[instruction.Source].RemoveAt(state[instruction.Source].Count - 1);
+            state[instruction.Destination].Add(itemToMove);
+        }
+    }
+
     public string Part1(string[] inputs)
     {
         // Find the boxes and instructions
-        (List<string> boxes, List<string> instructions) = SeparateBoxesAndInstructions(inputs);
+        (List<string> boxes, List<string> instructionsRaw) = SeparateBoxesAndInstructions(inputs);
 
         // Represent the boxes as a structure
-        List<List<char>> startState = ParseBoxes(boxes);
+        List<List<char>> state = ParseBoxes(boxes);
         // Execute the instructions on the boxes
+        var instructions = instructionsRaw.Select(i => {
+            //"move 1 from 2 to 1"
+            string[] parts = i.Split(' ');
+            return new Instruction(int.Parse(parts[1]), int.Parse(parts[3]), int.Parse(parts[5]));
+        });
+
+        foreach(Instruction instruction in instructions)
+        {
+            ExecuteInstruction(instruction, state);
+        }
+
+
         // report the top boxes
-
-
-        return string.Empty;
+        return state.Select(row => row[row.Count - 1])
+            .Aggregate("", (total, box) => total += box);
     }
 }
