@@ -1,7 +1,8 @@
 namespace src;
 public class Day4
 {
-    public int Part1(string[] inputs){
+    public int Part1(string[] inputs)
+    {
         return inputs.Count(input => ProcessLine(input));
         
         bool ProcessLine(string input)
