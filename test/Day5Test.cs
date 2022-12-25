@@ -51,24 +51,24 @@ public class Day5Test
         actual.Should().Be(expected);
     }
 
-    // [Fact]
-    // public void Part2_Sample()
-    // {
-    //     int expected = 4;
-    //     int actual = _sut.Part2(_sampleInput);
+    [Fact]
+    public void Part2_Sample()
+    {
+        string expected = "MCD";
+        string actual = _sut.Part2(_sampleInput);
 
-    //     actual.Should().Be(expected); 
-    // }
+        actual.Should().Be(expected); 
+    }
 
 
-    // [Fact]
-    // public void Part2_Data()
-    // {
-    //     string[] inputs = File.ReadAllLines("./inputs/day4.txt");
+    [Fact]
+    public void Part2_Data()
+    {
+        string[] inputs = File.ReadAllLines("./inputs/day5.txt");
 
-    //     int expected = 0;
-    //     int actual = _sut.Part2(inputs);
+        string expected = "";
+        string actual = _sut.Part2(inputs);
 
-    //     actual.Should().Be(expected);
-    // }
+        actual.Should().Be(expected);
+    }
 }

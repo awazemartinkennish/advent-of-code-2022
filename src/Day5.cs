@@ -80,7 +80,7 @@ public class Day5
         public int Destination => this.destination - 1;
     }
 
-    void ExecuteInstruction(Instruction instruction, List<List<char>> state)
+    void Part1_ExecuteInstruction(Instruction instruction, List<List<char>> state)
     {
         for(int i=0; i< instruction.numberToMove; i++)
         {
@@ -88,6 +88,15 @@ public class Day5
             state[instruction.Source].RemoveAt(state[instruction.Source].Count - 1);
             state[instruction.Destination].Add(itemToMove);
         }
+    }
+
+    void Part2_ExecuteInstruction(Instruction instruction, List<List<char>> state)
+    {
+        List<char> rowToManipulate = state[instruction.Source];
+        List<char> itemsToMove = rowToManipulate.Skip(rowToManipulate.Count - instruction.numberToMove).Take(instruction.numberToMove).ToList();
+        rowToManipulate.RemoveRange(rowToManipulate.Count - instruction.numberToMove, instruction.numberToMove);
+        
+        state[instruction.Destination].AddRange(itemsToMove);
     }
 
     string PrintTopRow(List<List<char>> state) => state.Select(row => row[row.Count - 1])
@@ -109,10 +118,34 @@ public class Day5
 
         foreach(Instruction instruction in instructions)
         {
-            ExecuteInstruction(instruction, state);
+            Part1_ExecuteInstruction(instruction, state);
         }
 
         // report the top boxes
         return PrintTopRow(state);
+    }
+
+    public string Part2(string[] inputs)
+    {
+        // Find the boxes and instructions
+        (List<string> boxes, List<string> instructionsRaw) = SeparateBoxesAndInstructions(inputs);
+
+        // Represent the boxes as a structure
+        List<List<char>> state = ParseBoxes(boxes);
+        // Execute the instructions on the boxes
+        var instructions = instructionsRaw.Select(i => {
+            //"move 1 from 2 to 1"
+            string[] parts = i.Split(' ');
+            return new Instruction(int.Parse(parts[1]), int.Parse(parts[3]), int.Parse(parts[5]));
+        }).ToList();
+
+        foreach(Instruction instruction in instructions)
+        {
+            Part2_ExecuteInstruction(instruction, state);
+        }
+
+        // report the top boxes
+        return PrintTopRow(state);
+
     }
 }
