@@ -1,7 +1,7 @@
 namespace src;
 public class Day5
 {
-    public (List<string> boxes, List<string> instructions) SeparateBoxesAndInstructions(string[] inputs)
+    public (List<string> boxes, List<string> instructionsRaw) SeparateBoxesAndInstructions(string[] inputs)
     {
         List<string> boxes = new();
         List<string> instructions = new();
@@ -14,7 +14,7 @@ public class Day5
             {
                 isInstructions = true;
                 boxes = boxes.Take(boxes.Count - 1).ToList();
-                break;
+                continue;
             }
 
             if (isInstructions)
@@ -30,9 +30,6 @@ public class Day5
         return (boxes, instructions);
     }
 
-    // "    [D]    ",
-    // "[N] [C]    ",
-    // "[Z] [M] [P]",
     public List<List<char>> ParseBoxes(List<string> boxes)
     {
         int rowWidth = boxes[0].Length;
@@ -93,6 +90,9 @@ public class Day5
         }
     }
 
+    string PrintTopRow(List<List<char>> state) => state.Select(row => row[row.Count - 1])
+            .Aggregate("", (total, box) => total += box);
+
     public string Part1(string[] inputs)
     {
         // Find the boxes and instructions
@@ -105,16 +105,14 @@ public class Day5
             //"move 1 from 2 to 1"
             string[] parts = i.Split(' ');
             return new Instruction(int.Parse(parts[1]), int.Parse(parts[3]), int.Parse(parts[5]));
-        });
+        }).ToList();
 
         foreach(Instruction instruction in instructions)
         {
             ExecuteInstruction(instruction, state);
         }
 
-
         // report the top boxes
-        return state.Select(row => row[row.Count - 1])
-            .Aggregate("", (total, box) => total += box);
+        return PrintTopRow(state);
     }
 }

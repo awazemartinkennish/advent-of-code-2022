@@ -40,16 +40,16 @@ public class Day5Test
         actual.Should().Be(expected);   
     }
 
-    // [Fact]
-    // public void Part1_Data()
-    // {
-    //     string[] inputs = File.ReadAllLines("./inputs/day4.txt");
+    [Fact]
+    public void Part1_Data()
+    {
+        string[] inputs = File.ReadAllLines("./inputs/day5.txt");
 
-    //     string expected = "CMZ";
-    //     string actual = _sut.Part1(inputs);
+        string expected = "MQTPGLLDN";
+        string actual = _sut.Part1(inputs);
 
-    //     actual.Should().Be(expected);
-    // }
+        actual.Should().Be(expected);
+    }
 
     // [Fact]
     // public void Part2_Sample()
