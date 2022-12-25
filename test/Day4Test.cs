@@ -48,7 +48,7 @@ public class Day4Test
     {
         string[] inputs = File.ReadAllLines("./inputs/day4.txt");
 
-        int expected = 0;
+        int expected = 770;
         int actual = _sut.Part2(inputs);
 
         actual.Should().Be(expected);
